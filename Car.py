@@ -28,7 +28,7 @@ class Car:
         self.turningRate = 2.2 / self.width
         self.friction = 0.99
         self.maxSpeed = self.width / 2.2
-        self.maxReverseSpeed = -1 * self.maxSpeed / 2.0
+        self.maxReverseSpeed = -1 * self.maxSpeed / 9
         self.accelerationSpeed = self.width / 1060.0
         self.dead = False
         self.driftMomentum = 0
@@ -74,6 +74,14 @@ class Car:
             self.turningRight = True
         elif actionNo == 8:
             pass
+
+    def updateWithUser(self, wasd_list):
+        self.turningLeft = False
+        self.turningRight = False
+        self.accelerating = False
+        self.reversing = False
+
+        (self.accelerating, self.turningLeft, self.reversing, self.turningRight) = wasd_list
 
     def move(self):
         global vec2
