@@ -1,18 +1,6 @@
 import math
 import pygame
-
-
-def rotate(vec, angle):
-    angle = angle * math.pi / 180
-    vec = [vec[0] * math.cos(angle) - vec[1] * math.sin(angle), vec[0] * math.sin(angle) + vec[1] * math.cos(angle)]
-    return vec
-
-
-def get_angle(vec):
-    if vec[0] ** 2 + vec[1] ** 2 == 0:
-        return 0
-    return math.degrees(math.atan2(vec[1], vec[0]))
-
+from geomery_methods import *
 
 class Car:
 
