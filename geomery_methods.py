@@ -101,8 +101,9 @@ def normal_point_to_polygon(point, polygon):
 def score_distanse(car_point, polygon):
     (score_point, number_of_line) = normal_point_to_polygon(car_point, polygon)
     score = 0
+    last_point = (number_of_line - 1) % len(polygon)
     if score_point:
-        for i in range(1, number_of_line):
-            score += distanse(polygon[i], polygon[i - 1])
-        score += distanse(score_point, polygon[number_of_line - 1])
+        for i in range(0, last_point):
+            score += distanse(polygon[i], polygon[i + 1])
+        score += distanse(score_point, polygon[last_point])
     return score, number_of_line
