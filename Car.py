@@ -5,10 +5,10 @@ from geomery_methods import *
 class Car:
 
     def __init__(self):
-        self.x, self.y = (297, 119)
+        self.x, self.y = (180, 265)
         self.vel = 0
-        self.direction = [0, 1]
-        self.direction = rotate(self.direction, 180 / 12)
+        self.direction = [1, 0]
+        #self.direction = rotate(self.direction, 180 / 12)
         self.acc = 0
         self.width = 20
         self.height = 15
