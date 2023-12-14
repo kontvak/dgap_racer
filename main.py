@@ -16,9 +16,8 @@ TRACK_COLOR = (25, 25, 25)
 file = open('track0.txt', 'r')
 track_out = ast.literal_eval(next(file))
 track_in = ast.literal_eval(next(file))
+track_score = ast.literal_eval(next(file))
 file.close()
-#track_geom = Polygon(track)
-#track_geom.contains(point)
 
 run = True
 pygame.init()
@@ -32,6 +31,17 @@ while run:
     pygame.draw.polygon(screen, TRACK_COLOR, track_out)
     pygame.draw.polygon(screen, BACK_COLOR, track_in)
     car1.draw(screen)
+
+    point_out = first_intersection((car1.x, car1.y), rotate(car1.direction, 30), track_in, track_out)
+    if point_out:
+        pygame.draw.circle(screen, (0, 0, 255), point_out, 2)
+
+    npoint = normal_point_to_polygon((car1.x, car1.y), track_score)[0]
+
+    if npoint:
+        pygame.draw.circle(screen, (0, 0, 255), npoint, 2)
+
+    print(score_distanse((car1.x, car1.y), track_score))
 
     keys = pygame.key.get_pressed()
     wasd = (keys[pygame.K_w], keys[pygame.K_d], keys[pygame.K_s], keys[pygame.K_a])

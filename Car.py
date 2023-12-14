@@ -5,8 +5,7 @@ from geomery_methods import *
 class Car:
 
     def __init__(self):
-        self.x = 258
-        self.y = 288
+        self.x, self.y = (297, 119)
         self.vel = 0
         self.direction = [0, 1]
         self.direction = rotate(self.direction, 180 / 12)
@@ -129,3 +128,21 @@ class Car:
         new_rect = rotated_image.get_rect(center=(self.x, self.y))
 
         screen.blit(rotated_image, new_rect)
+
+
+    def get_parametrs(self):
+        global track_out, track_in, track_score
+        d_0_1 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, 0.5), track_out, track_in))
+        d_0_2 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, -0.5), track_out, track_in))
+        tan_0 = 0.01745 * d_0_1 / (d_0_2 - d_0_1 + 0.00001)
+        d_15_1 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, 15), track_out, track_in))
+        d_15_2 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, -15), track_out, track_in))
+        d_30_1 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, 30), track_out, track_in))
+        d_30_2 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, -30), track_out, track_in))
+        d_90_1 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, 90), track_out, track_in))
+        d_90_2 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, -90), track_out, track_in))
+        score, number_of_line = score_distanse((self.x, self.y), track_score)
+        score_directoin = normalize(track_score[number_of_line][0] - track_score[number_of_line - 1][0], track_score[number_of_line][1] - track_score[number_of_line - 1][1])
+        score_directoin_cos = score_directoin[0] * self.direction[0] + score_directoin[1] * self.direction[1]
+
+        return self.vel, score_directoin_cos, d_0_1, d_0_2, tan_0, d_15_1, d_15_2, d_30_1, d_30_2, d_90_1, d_90_2

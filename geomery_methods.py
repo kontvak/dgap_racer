@@ -13,6 +13,21 @@ def get_angle(vec):
     return math.degrees(math.atan2(vec[1], vec[0]))
 
 
+def distanse(point1, point2):
+    return ((point2[0] - point1[0]) ** 2 + (point2[1] - point1[1]) ** 2) ** 0.5
+
+
+def normalize(vec):
+    modul = vec[0] ** 2 + vec[1] ** 2
+    if modul == 0:
+        return [0, 0]
+    return [vec[0] / modul ** 0.5, vec[1] / modul ** 0.5]
+
+
+def scalar(vec1, vec2):
+    return vec1[0] * vec2[0] + vec1[1] * vec2[1]
+
+
 def line_intersection_with_line(car_coords, direction, point1, point2, only_forward=True):
 
     frac_a1_b1 = - direction[1] / direction[0]
@@ -59,4 +74,35 @@ def first_intersection(car_coords, direction, polygon1, polygon2):
         return point2
 
 
+def normal_point_to_line(point1, point2, point3):
+    napr = (point2[0] - point1[0], point2[1] - point1[1])
+    napr = normalize(napr)
+    x = point1[0] + napr[0] * (scalar(napr, point3) - scalar(napr, point1))
+    y = point1[1] + napr[1] * (scalar(napr, point3) - scalar(napr, point1))
+    if point1[0] <= x <= point2[0] or point1[0] >= x >= point2[0]:
+        return x, y
+    return False
 
+
+def normal_point_to_polygon(point, polygon):
+    min_distanse = 100000
+    ans_point = False
+    number_of_line = 0
+    for i in range(len(polygon)):
+        now_point = normal_point_to_line(polygon[i - 1], polygon[i], point)
+        if now_point:
+            if distanse(now_point, point) <= min_distanse:
+                min_distanse = distanse(now_point, point)
+                ans_point = now_point
+                number_of_line = i
+    return ans_point, number_of_line
+
+
+def score_distanse(car_point, polygon):
+    (score_point, number_of_line) = normal_point_to_polygon(car_point, polygon)
+    score = 0
+    if score_point:
+        for i in range(1, number_of_line):
+            score += distanse(polygon[i], polygon[i - 1])
+        score += distanse(score_point, polygon[number_of_line - 1])
+    return score, number_of_line
