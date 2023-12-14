@@ -32,12 +32,12 @@ while run:
     pygame.draw.polygon(screen, BACK_COLOR, track_in)
     car1.draw(screen)
 
-    point_out = first_intersection((car1.x, car1.y), rotate(car1.direction, 30), track_in, track_out)
+    point_out = first_intersection((car1.x, car1.y), rotate(car1.direction, 0), track_in, track_out)
     if point_out:
         pygame.draw.circle(screen, (0, 0, 255), point_out, 2)
 
     npoint = normal_point_to_polygon((car1.x, car1.y), track_score)[0]
-
+    pygame.draw.circle(screen, (0, 0, 255), (297, 119), 2)
     if npoint:
         pygame.draw.circle(screen, (0, 0, 255), npoint, 2)
 
