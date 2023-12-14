@@ -1,7 +1,7 @@
 import math
 import pygame
 from geomery_methods import *
-
+#fbcz gjgf
 class Car:
 
     def __init__(self):
