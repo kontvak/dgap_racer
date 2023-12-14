@@ -47,7 +47,6 @@ while run:
     wasd = (keys[pygame.K_w], keys[pygame.K_d], keys[pygame.K_s], keys[pygame.K_a])
 
     car1.updateWithUser(wasd)
-    car1.updateControls()
     car1.move()
 
     for event in pygame.event.get():

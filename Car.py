@@ -1,7 +1,8 @@
 import math
 import pygame
 from geomery_methods import *
-#fbcz gjgf
+
+
 class Car:
 
     def __init__(self):
@@ -71,26 +72,6 @@ class Car:
         (self.accelerating, self.turningLeft, self.reversing, self.turningRight) = wasd_list
 
     def move(self):
-        global vec2
-        self.vel += self.acc * (1.2 - abs(self.vel / self.maxSpeed))
-        self.vel *= self.friction
-        if self.maxSpeed < self.vel:
-            self.vel = self.maxSpeed
-        elif self.vel < self.maxReverseSpeed:
-            self.vel = self.maxReverseSpeed
-
-        addVector = [0, 0]
-
-        addVector[0] += self.vel * self.direction[0]
-        addVector[0] += self.driftMomentum * (- self.direction[1])
-        addVector[1] += self.vel * self.direction[1]
-        addVector[1] += self.driftMomentum * self.direction[0]
-        self.driftMomentum *= self.driftFriction
-
-        self.x += addVector[0]
-        self.y += addVector[1]
-
-    def updateControls(self):
         multiplier = 1
         if abs(self.vel) < 5:
             multiplier = abs(self.vel) / 5
@@ -120,6 +101,26 @@ class Car:
             else:
                 self.acc = -1 * self.accelerationSpeed
 
+        self.vel += self.acc * (1.2 - abs(self.vel / self.maxSpeed))
+        self.vel *= self.friction
+        if self.maxSpeed < self.vel:
+            self.vel = self.maxSpeed
+        elif self.vel < self.maxReverseSpeed:
+            self.vel = self.maxReverseSpeed
+
+        addVector = [0, 0]
+
+        addVector[0] += self.vel * self.direction[0]
+        addVector[0] += self.driftMomentum * (- self.direction[1])
+        addVector[1] += self.vel * self.direction[1]
+        addVector[1] += self.driftMomentum * self.direction[0]
+        self.driftMomentum *= self.driftFriction
+
+        self.x += addVector[0]
+        self.y += addVector[1]
+
+
+
     def draw(self, screen):
         if not bool(self.carPic):
             self.carPic = pygame.image.load('car.png')
@@ -142,7 +143,7 @@ class Car:
         d_90_1 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, 90), track_out, track_in))
         d_90_2 = distanse((self.x, self.y), first_intersection((self.x, self.y), rotate(self.direction, -90), track_out, track_in))
         score, number_of_line = score_distanse((self.x, self.y), track_score)
-        score_directoin = normalize(track_score[number_of_line][0] - track_score[number_of_line - 1][0], track_score[number_of_line][1] - track_score[number_of_line - 1][1])
-        score_directoin_cos = score_directoin[0] * self.direction[0] + score_directoin[1] * self.direction[1]
+        #score_directoin = normalize(track_score[number_of_line][0] - track_score[number_of_line - 1][0], track_score[number_of_line][1] - track_score[number_of_line - 1][1])
+        #score_directoin_cos = score_directoin[0] * self.direction[0] + score_directoin[1] * self.direction[1]
 
-        return self.vel, score_directoin_cos, d_0_1, d_0_2, tan_0, d_15_1, d_15_2, d_30_1, d_30_2, d_90_1, d_90_2
+        return self.vel, d_0_1, d_0_2, tan_0, d_15_1, d_15_2, d_30_1, d_30_2, d_90_1, d_90_2
