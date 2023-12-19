@@ -14,6 +14,8 @@ def get_angle(vec):
 
 
 def distanse(point1, point2):
+    if not (point1 and point2):
+        return 10000
     return ((point2[0] - point1[0]) ** 2 + (point2[1] - point1[1]) ** 2) ** 0.5
 
 
