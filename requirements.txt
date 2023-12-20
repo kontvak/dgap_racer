@@ -1,0 +1,4 @@
+neat-python==0.92
+pygame==2.5.2
+pyglet==2.0.10
+shapely==2.0.2
